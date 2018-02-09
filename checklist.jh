@@ -1,0 +1,42 @@
+entity Item {
+	name String
+    image_url String
+    identifier String
+    order Integer
+    name String
+}
+
+entity Subitem {
+	name String
+    order Integer
+    identifier String
+    image Blob
+
+}
+
+entity Checklist {
+	name String
+    order Integer
+    identifier String
+    image Blob
+
+}
+
+entity ChecklistItem {
+	name String
+    order Integer
+    identifier String
+    image Blob
+
+}
+
+relationship OneToMany {
+	Item{subitem} to Subitem
+}
+
+
+relationship ManyToMany {
+	Subitem{checklist} to Checklist{subitem}
+    Checklist{checklistitem} to ChecklistItem{checklist}
+}
+
