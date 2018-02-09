@@ -1,0 +1,67 @@
+<div>
+    <h2>
+        <span>Checklist Items</span>
+        <button class="btn btn-primary float-right jh-create-entity create-checklist-item" [routerLink]="['/', { outlets: { popup: ['checklist-item-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span >
+            Create new Checklist Item
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="checklistItems">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span>ID</span></th>
+            <th><span>Name</span></th>
+            <th><span>Order</span></th>
+            <th><span>Identifier</span></th>
+            <th><span>Image</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let checklistItem of checklistItems ;trackBy: trackId">
+                <td><a [routerLink]="['../checklist-item', checklistItem.id ]">{{checklistItem.id}}</a></td>
+                <td>{{checklistItem.name}}</td>
+                <td>{{checklistItem.order}}</td>
+                <td>{{checklistItem.identifier}}</td>
+                <td>
+                    <a *ngIf="checklistItem.image" (click)="openFile(checklistItem.imageContentType, checklistItem.image)">open</a>
+                    <span *ngIf="checklistItem.image">{{checklistItem.imageContentType}}, {{byteSize(checklistItem.image)}}</span>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../checklist-item', checklistItem.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="d-none d-md-inline">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'checklist-item/'+ checklistItem.id + '/edit'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="d-none d-md-inline">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'checklist-item/'+ checklistItem.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="d-none d-md-inline">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,53 @@
+
+<div *ngIf="subitem">
+    <h2><span>Subitem</span> {{subitem.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span>Name</span></dt>
+        <dd>
+            <span>{{subitem.name}}</span>
+        </dd>
+        <dt><span>Order</span></dt>
+        <dd>
+            <span>{{subitem.order}}</span>
+        </dd>
+        <dt><span>Identifier</span></dt>
+        <dd>
+            <span>{{subitem.identifier}}</span>
+        </dd>
+        <dt><span>Image</span></dt>
+        <dd>
+            <div *ngIf="subitem.image">
+                <a (click)="openFile(subitem.imageContentType, subitem.image)">open</a>
+                {{subitem.imageContentType}}, {{byteSize(subitem.image)}}
+            </div>
+        </dd>
+        <dt><span>Item</span></dt>
+        <dd>
+            <div *ngIf="subitem.item">
+                <a [routerLink]="['/item', subitem.item?.id]">{{subitem.item?.id}}</a>
+            </div>
+        </dd>
+        <dt><span>Checklist</span></dt>
+        <dd>
+            <span *ngFor="let checklist of subitem.checklists; let last = last">
+                <a [routerLink]="['/checklist', checklist?.id ]">{{checklist.id}}</a>{{last ? '' : ', '}}
+            </span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'subitem/'+ subitem.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span> Edit</span>
+    </button>
+</div>
